@@ -1,24 +1,192 @@
-# Compiled class file
-*.class
+interface Weather {
+    double temperature();
+    double maxTemperature();
+    double minTemperature();
+    double feels();
+    int humidity();
+    String Weathers();
+}
+public class Location {
+    String city;
+    public Location(String city){
+        this.city = city;
+    }
+    String getCity(){
+        return this.city;
+    }
+}
+public class FirstAPIWeather implements Weather{
+    public String city;
+    public FirstAPIWeather(Location location){
+        this.city = location.getCity();
+    }
+    @Override
+    public double temperature() {
+        return switch (city){
+            case "Almaty" -> 13;
+            case "Atyrau" -> 14;
+            case "Astana" -> 7;
+            default -> throw new IllegalStateException("Unexpected value: " + city);
+        };
+    }
 
-# Log file
-*.log
+    @Override
+    public double maxTemperature() {
+        return switch (city){
+            case "Almaty" -> 13;
+            case "Atyrau" -> 14;
+            case "Astana" -> 7;
+            default -> throw new IllegalStateException("Unexpected value: " + city);
+        };
+    }
 
-# BlueJ files
-*.ctxt
+    @Override
+    public double minTemperature() {
+        return switch (city){
+            case "Almaty" -> 5;
+            case "Atyrau" -> 7;
+            case "Astana" -> -1;
+            default -> throw new IllegalStateException("Unexpected value: " + city);
+        };
+    }
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+    @Override
+    public double feels() {
+        return switch (city){
+            case "Almaty" -> 12;
+            case "Atyrau" -> 14;
+            case "Astana" -> 3;
+            default -> throw new IllegalStateException("Unexpected value: " + city);
+        };
+    }
 
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
+    @Override
+    public int humidity() {
+        return switch (city){
+            case "Almaty" -> 72;
+            case "Atyrau" -> 77;
+            case "Astana" -> 57;
+            default -> throw new IllegalStateException("Unexpected value: " + city);
+        };
+    }
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+    @Override
+    public String Weathers() {
+        return switch (city){
+            case "Almaty" -> "Sunny";
+            case "Atyrau" -> "Cloudy";
+            case "Astana" -> "Windy";
+            default -> throw new IllegalStateException("Unexpected value: " + city);
+        };
+    }
+}
+public class SecondAPIWeather implements Weather{
+    public String city;
+    public SecondAPIWeather(Location location){
+        this.city = location.getCity();
+    }
+    @Override
+    public double temperature() {
+        return switch (city){
+            case "Almaty" -> 55;
+            case "Atyrau" -> 57;
+            case "Astana" -> 44;
+            default -> throw new IllegalStateException("Unexpected value: " + city);
+        };
+    }
+
+    @Override
+    public double maxTemperature() {
+        return switch (city){
+            case "Almaty" -> 55;
+            case "Atyrau" -> 57;
+            case "Astana" -> 44;
+            default -> throw new IllegalStateException("Unexpected value: " + city);
+        };
+    }
+
+    @Override
+    public double minTemperature() {
+        return switch (city){
+            case "Almaty" -> 41;
+            case "Atyrau" -> 44;
+            case "Astana" -> 30;
+            default -> throw new IllegalStateException("Unexpected value: " + city);
+        };
+    }
+
+    @Override
+    public double feels() {
+        return switch (city){
+            case "Almaty" -> 53;
+            case "Atyrau" -> 57;
+            case "Astana" -> 37;
+            default -> throw new IllegalStateException("Unexpected value: " + city);
+        };
+    }
+
+    @Override
+    public int humidity() {
+        return switch (city){
+            case "Almaty" -> 72;
+            case "Atyrau" -> 77;
+            case "Astana" -> 57;
+            default -> throw new IllegalStateException("Unexpected value: " + city);
+        };
+    }
+
+    @Override
+    public String Weathers() {
+        return switch (city){
+            case "Almaty" -> "Sunny";
+            case "Atyrau" -> "Cloudy";
+            case "Astana" -> "Windy";
+            default -> throw new IllegalStateException("Unexpected value: " + city);
+        };
+    }
+}
+public class FirstAPIWeatherAdapter{
+    FirstAPIWeather firstAPIWeather;
+    public FirstAPIWeatherAdapter(FirstAPIWeather firstAPIWeather){
+        this.firstAPIWeather = firstAPIWeather;
+    }
+    public void print(){
+        System.out.println("City: " + firstAPIWeather.city
+                +"\nTemperature: " + (int)firstAPIWeather.temperature()
+                +"\nMin.Temperature: " + (int)firstAPIWeather.minTemperature()
+                +"\nMax.Temperature: " + (int)firstAPIWeather.maxTemperature()
+                +"\nFeels like: " + (int)firstAPIWeather.feels()
+                +"\nHumidity: " + firstAPIWeather.humidity()
+                +"\nWeather: " + firstAPIWeather.Weathers() + "\n");
+    }
+}
+public class SecondAPIWeatherAdapter {
+    SecondAPIWeather secondAPIWeather;
+    public SecondAPIWeatherAdapter(SecondAPIWeather secondAPIWeather){
+        this.secondAPIWeather = secondAPIWeather;
+    }
+    public void print(){
+        System.out.println("City: " + secondAPIWeather.city
+                +"\nTemperature: " + (int)Math.ceil(((secondAPIWeather.temperature() - 32) * 5)/9)
+                +"\nMin.Temperature: " + (int)Math.ceil(((secondAPIWeather.minTemperature() - 32) * 5)/9)
+                +"\nMax.Temperature: " + (int)Math.ceil(((secondAPIWeather.maxTemperature() - 32) * 5)/9)
+                +"\nFeels like: " + (int)Math.ceil(((secondAPIWeather.feels() - 32) * 5)/9)
+                +"\nHumidity: " + secondAPIWeather.humidity()
+                +"\nWeather: " + secondAPIWeather.Weathers() + "\n");
+    }
+}
+public class MainClassToWeather {
+    public static void main(String[] args) {
+        Location location = new Location("Atyrau");
+        FirstAPIWeather firstAPIWeather = new FirstAPIWeather(location);
+        FirstAPIWeatherAdapter firstAPIWeatherAdapter = new FirstAPIWeatherAdapter(firstAPIWeather);
+        firstAPIWeatherAdapter.print();
+        SecondAPIWeather secondAPIWeather = new SecondAPIWeather(location);
+        SecondAPIWeatherAdapter secondAPIWeatherAdapter = new SecondAPIWeatherAdapter(secondAPIWeather);
+        secondAPIWeatherAdapter.print();
+        Location anotherLocation = new Location("Astana");
+        SecondAPIWeather secondAPIWeather1 = new SecondAPIWeather(anotherLocation);
+        SecondAPIWeatherAdapter secondAPIWeatherAdapter1 = new SecondAPIWeatherAdapter(secondAPIWeather1);
+        secondAPIWeatherAdapter1.print();
+    }
+}
